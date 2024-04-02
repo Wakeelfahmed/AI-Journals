@@ -1,11 +1,10 @@
 import math
 
-
 # Function to print the game board
 def print_board(board):
     for row in board:
         print(" | ".join(row))
-        print("-" * 5)
+        print("-" * 10)
 
 
 # Function to check if a player has won
@@ -75,7 +74,7 @@ def minimax(board, depth, alpha, beta, maximizingPlayer):
 
 # Function to find the best move using minimax with alpha-beta pruning
 def find_best_move(board):
-    bestMove = (-1, -1)
+    bestMove = (-1, -1)     # row & col
     bestEval = -math.inf
     alpha = -math.inf
     beta = math.inf
@@ -92,30 +91,29 @@ def find_best_move(board):
 
 
 # Main function to play the game
-def play_game():
-    board = [['.' for _ in range(3)] for _ in range(3)]
-    print("Let's play Tic Tac Toe!")
-    print_board(board)
-    while not game_over(board):
-        x, y = map(int, input("Enter your move (row and column, separated by space): ").split())
-        if board[x][y] != '.':
-            print("Invalid move! Try again.")
-            continue
-        board[x][y] = 'O'
-        print_board(board)
-        if game_over(board):
-            break
-        print("Computer's turn:")
-        bestMove = find_best_move(board)
-        board[bestMove[0]][bestMove[1]] = 'X'
-        print_board(board)
-    if check_winner(board, 'X'):
-        print("Computer wins!")
-    elif check_winner(board, 'O'):
-        print("You win!")
-    else:
-        print("It's a draw!")
-
-
 # Start the game
-play_game()
+board = [['.' for _ in range(3)] for _ in range(3)]  # create board
+print("Let's play Tic Tac Toe!")
+
+print_board(board)
+
+while not game_over(board):
+    x, y = map(int, input("Enter your move (row and column, separated by space): ").split())
+    if board[x][y] != '.':
+        print("Invalid move! Try again.")
+        continue
+    board[x][y] = 'O'
+    print_board(board)
+    if game_over(board):
+        break
+    print("Computer's turn:")
+    bestMove = find_best_move(board)
+    board[bestMove[0]][bestMove[1]] = 'X'
+    print_board(board)
+
+if check_winner(board, 'X'):
+    print("Computer wins!")
+elif check_winner(board, 'O'):
+    print("You win!")
+else:
+    print("It's a draw!")
